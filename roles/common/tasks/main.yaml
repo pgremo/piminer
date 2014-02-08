@@ -1,0 +1,32 @@
+---
+- name: update system
+  shell: pacman -Syu --noconfirm
+
+- name: set time zone
+  shell: timedatectl set-timezone {{ timezone }}
+
+- name: enabled ntp
+  service: name=ntpd enabled=true state=started
+
+- name: ensure avahi and nss-mdns is installed
+  pacman: name=avahi,nss-mdns state=installed
+  notify:
+  - restart dbus
+- name: start avahi
+  service: name=avahi-daemon.service enabled=true state=started
+
+- name: ensure wifi is installed
+  pacman: name=netctl state=installed
+- name: write wifi config
+  template: src=etc/netctl/wireless.j2 dest=/etc/netctl/wireless
+  notify:
+  - restart wireless
+- name: enable wireless
+  shell: netctl reenable wireless
+- name: start wireless
+  shell: netctl start wireless
+
+- name: ensure adduser and sudo is installed
+  pacman: name=adduser,sudo state=installed
+- name: enable sudo for wheel group
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) NOPASSWD: ALL'"

@@ -1,0 +1,5 @@
+---
+- hosts: piminer
+  roles:
+    - common
+    - miner

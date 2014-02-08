@@ -1,0 +1,5 @@
+---
+- hosts: piminer-dev
+  roles:
+    - common
+    - dev

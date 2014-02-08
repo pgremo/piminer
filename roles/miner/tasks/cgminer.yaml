@@ -1,0 +1,11 @@
+---
+- name: copy cgminer package file
+  copy: src=packages/cgminer/cgminer-{{ cgminer_version }}-1-armv6h.pkg.tar.xz dest=/root/cgminer-{{ cgminer_version }}-1-armv6h.pkg.tar.xz
+- name: install gcminer
+  shell: "pacman -U --noconfirm file:///root/cgminer-{{ cgminer_version }}-1-armv6h.pkg.tar.xz"
+- name: copy cgminer config
+  template: src=etc/cgminer.j2 dest=/etc/cgminer.conf
+  notify:
+  - restart cgminer
+- name: enable and start cgminer
+  service: name=cgminer enabled=true state=started  

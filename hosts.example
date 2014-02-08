@@ -1,0 +1,24 @@
+[piminer-dev]
+piminer-dev.local
+
+[piminer]
+piminer.local
+
+[all:children]
+piminer-dev
+piminer
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python2
+wifi_ssid=<ssid>
+wifi_key=<password>
+timezone=<timezone>
+
+[piminer:vars]
+# eligius specific config http://eligius.st/~gateway/
+eligius_url=h<eligius url>
+eligius_user=<eligius user>
+eligius_pass=<eligius password>
+
+[piminer-dev:vars]
+user_dev_password=<dev user password>

@@ -1,0 +1,5 @@
+---
+- name: restart cgminer
+  service: name=cgminer state=restarted
+- name: restart bfgminer
+  service: name=bfgminer state=restarted

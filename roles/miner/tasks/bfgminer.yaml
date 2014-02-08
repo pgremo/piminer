@@ -1,0 +1,11 @@
+---
+- name: copy bfgminer package file
+  copy: src=packages/bfgminer/bfgminer-{{ bfgminer_version }}-1-armv6h.pkg.tar.xz dest=/root/bfgminer-{{ bfgminer_version }}-1-armv6h.pkg.tar.xz
+- name: install bfgminer
+  shell: "pacman -U --noconfirm file:///root/bfgminer-{{ bfgminer_version }}-1-armv6h.pkg.tar.xz"
+- name: copy bfgminer config
+  template: src=etc/bfgminer.j2 dest=/etc/bfgminer.conf
+  notify:
+  - restart bfgminer
+- name: enable and start bfgminer
+  service: name=bfgminer enabled=true state=started  
