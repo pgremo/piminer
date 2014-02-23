@@ -8,6 +8,6 @@
   notify:
   - restart bfgminer
 - name: enable restart of bfgminer
-  ini_file: dest=/usr/lib/systemd/system/bfgminer.service state=present section='Service' option='Restart' value='always'
+  copy: src=usr/lib/systemd/system/bfgminer.service dest=/usr/lib/systemd/system/bfgminer.service mode=644
 - name: enable and start bfgminer
   service: name=bfgminer enabled=true state=started  
