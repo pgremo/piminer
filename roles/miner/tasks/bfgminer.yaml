@@ -7,5 +7,7 @@
   template: src=etc/bfgminer.j2 dest=/etc/bfgminer.conf
   notify:
   - restart bfgminer
+- name: enable restart of bfgminer
+  ini_file: dest=/usr/lib/systemd/system/bfgminer.service state=present section='Service' option='Restart' value='always'
 - name: enable and start bfgminer
   service: name=bfgminer enabled=true state=started  
